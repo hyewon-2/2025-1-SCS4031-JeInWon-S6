@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 
-import Signup from './pages/Signup';
+import Signup from './pages/performer/Signup';
 
 function App() {
     return (
