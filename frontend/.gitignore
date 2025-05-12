@@ -159,7 +159,4 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-2f8f7d3a167d9e0746e2d50a20737ba0be645aa4
-
-frontend/build/
-.idea/
+>>>>>>> 2f8f7d3a167d9e0746e2d50a20737ba0be645aa4
