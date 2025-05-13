@@ -1,6 +1,8 @@
 package JeInOne.WeGong.app;
 
 import JeInOne.WeGong.DTO.ListenerDTO;
+import JeInOne.WeGong.DTO.ListenerLoginRequest;
+import JeInOne.WeGong.DTO.ListenerLoginResponse;
 import JeInOne.WeGong.Service.ListenerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,12 @@ public class ListenerController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody ListenerDTO request) {
         listenerService.signup(request);
-        return ResponseEntity.ok("회원가입 완료");
+        return ResponseEntity.ok("회원가입 성공");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ListenerLoginResponse> login(@RequestBody ListenerLoginRequest request) {
+        ListenerLoginResponse response = listenerService.login(request);
+        return ResponseEntity.ok(response);
     }
 }
