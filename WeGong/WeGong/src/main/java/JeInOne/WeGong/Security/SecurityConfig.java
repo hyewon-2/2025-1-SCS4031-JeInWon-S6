@@ -22,6 +22,7 @@ public class SecurityConfig {
                                 "/api/musician/login",
                                 "/api/listener/signup",
                                 "/api/listener/login",
+                                "/api/venues",
                                 "/h2-console/**"
                         ).permitAll()
 
