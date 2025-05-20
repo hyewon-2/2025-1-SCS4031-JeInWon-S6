@@ -17,7 +17,13 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/api/musician/signup"), new AntPathRequestMatcher("/api/listener/signup"), new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(
+                                "/api/musician/signup",
+                                "/api/musician/login",
+                                "/api/listener/signup",
+                                "/api/listener/login",
+                                "/h2-console/**"
+                        ).permitAll()
 
                         .anyRequest().authenticated()
                 )
@@ -30,7 +36,7 @@ public class SecurityConfig {
                         .cacheControl(Customizer.withDefaults())
                         .frameOptions(frame -> frame.sameOrigin())
                 )
-//                .formLogin();
+                .formLogin(form -> form.disable())
                 .httpBasic(Customizer.withDefaults());
 
 

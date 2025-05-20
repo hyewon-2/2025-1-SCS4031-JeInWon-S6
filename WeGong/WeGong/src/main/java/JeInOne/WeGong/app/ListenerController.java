@@ -19,7 +19,7 @@ public class ListenerController {
     private final ListenerService listenerService;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody ListenerDTO request) {
+    public ResponseEntity<?> signup(@RequestBody ListenerDTO request) {
         listenerService.signup(request);
         return ResponseEntity.ok("회원가입 성공");
     }
