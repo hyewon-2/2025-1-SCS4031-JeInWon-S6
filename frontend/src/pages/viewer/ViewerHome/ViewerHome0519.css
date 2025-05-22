@@ -23,6 +23,10 @@
   padding: 0;
   margin-right: 6px;
 }
+.logout-icon {
+  width: 22px;
+  height: 22px;
+}
 .banner-section {
   display: flex;
   background-color: #1a1a1a;
@@ -58,33 +62,37 @@
 .sub {
   font-size: 13px;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .banner-btn {
   border: 2px solid #fff;
   background: none;
   color: white;
-  padding: 4px 14px;
+  padding: 6px 14px;
   border-radius: 16px;
   cursor: pointer;
-  margin-bottom: 10px;
 }
+
 .banner-image {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 170px;
-  height: 170px;
+  width: 180px;
+  height: 180px;
   object-fit: contain;
 }
+
 .category-section {
   margin-bottom: 20px;
 }
+
 .section-title {
+   font-size: 18px;
    font-weight: bold;
    text-align: center;
 }
+
 .category-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -93,6 +101,7 @@
   padding-left: 16px;
   padding-right: 16px;
 }
+
 .category-card {
   background-color: #1a1a1a;
   border: 1px solid #aaa;
@@ -103,14 +112,17 @@
   transition: all 0.2s ease;
   cursor: pointer;
 }
+
 .category-icon {
   font-size: 20px;
   margin-bottom: 6px;
 }
+
 .category-label {
   font-size: 14px;
   font-family: 'SUIT';
 }
+
 .category-card.active {
   border-color: #fff;
   color: #fff;
@@ -126,6 +138,7 @@
   justify-content: center;
   margin-bottom: 20px;
 }
+
 .category-btn {
   background-color: #1a1a1a;
   border: 1px solid #aaa;
@@ -160,7 +173,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 0 10px;
+  padding-right: 10px;
 }
 
 .district-row {
@@ -169,13 +182,19 @@
   gap: 10px;
 }
 .district-btn {
-  background-color: #1e1e1e;
-  border: 1px solid #333;
-  color: #aaa;
+  background-color: #1a1a1a;
+  border: 1px solid #888;
   border-radius: 20px;
   padding: 6px 12px;
   font-size: 13px;
-  cursor: pointer;
+  color: #ccc;
+  white-space: nowrap;
+  min-width: 60px;
+  text-align: center;
+}
+.district-btn.selected {
+  background-color: #333;
+  color: #fff;
 }
 .location-section {
   margin-bottom: 20px;
@@ -191,15 +210,11 @@
   border: 1px solid #aaa;
   border-radius: 20px;
   padding: 6px 14px;
-  color: #ccc;
+  color: #aaa;
   white-space: nowrap;
   cursor: pointer;
 }
 .city-btn.selected {
-  background-color: #333;
-  color: #fff;
-}
-.district-btn.selected{
   background-color: #333;
   color: #fff;
 }
@@ -208,6 +223,24 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
+.district-btn {
+  width: 22%;
+  background-color: #1a1a1a;
+  border: 1px solid #888;
+  border-radius: 20px;
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 13px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.district-btn.selected {
+  background-color: #fff;
+  color: #000;
+}
+
 .community-section,
 .recommend-section {
   background-color: #1E1E1E;
@@ -255,7 +288,6 @@
 
 .venue-scroll {
   display: flex;
-  flex-wrap: nowrap;
   overflow-x: auto;
   gap: 16px;
   margin-top: 12px;
@@ -263,9 +295,10 @@
 
 .venue-card {
   background-color: #1A1A1A;
-  min-width: 120px;
+  width: 120px;
   border-radius: 8px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .venue-image {

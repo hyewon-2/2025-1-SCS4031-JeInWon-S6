@@ -1,0 +1,62 @@
+.ai-container {
+  background-color: #000;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: 'SUIT', sans-serif;
+  color: #fff;
+}
+
+.ai-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.ai-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ai-card {
+  background-color: #1c1c1e;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.ai-card:hover {
+  transform: translateY(-2px);
+}
+
+.ai-card-header {
+  background-color: #2c2c2e;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ai-card-body {
+  padding: 12px 16px;
+}
+
+.ai-tag-title {
+  font-size: 14px;
+  color: #bbb;
+  margin-bottom: 6px;
+}
+
+.ai-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ai-tag {
+  background-color: #2f2f2f;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 20px;
+}

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './PerformerHome.css';
+import './ViewerHome.css';
 import { FaMusic, FaHome, FaStreetView } from 'react-icons/fa';
-import { IoStar, IoStarOutline } from 'react-icons/io5';
 
-const PerformerHome = () => {
+const ViewerHome = () => {
   const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState('서울');
   const [selectedDistrict, setSelectedDistrict] = useState('');
@@ -40,16 +39,15 @@ const PerformerHome = () => {
 
   return (
     <div className="home-container">
-      <div className="home-header">
+      <header className="home-header">
         <button className="logout-btn" onClick={handleLogout}>
           <img src="/images/icons/logout.png" alt="로그아웃" className="logout-icon" />
         </button>
-      </div>
-
+      </header>
       <section className="banner-section">
         <div className="banner-text">
           <p className="label">공연비 지원</p>
-          <h2>여름이 온다,<br />무대를 준비하자!</h2>
+          <h2>여름이 온다,<br />무대를 준비하자!<br /><span className="highlight">7월 공연팀 모집 시작</span></h2>
           <p className="sub">전국 페스티벌부터 지역 공연까지,<br></br>
           지금 바로 참여하세요</p>
           <button className="banner-btn">자세히 보기</button>
@@ -149,4 +147,4 @@ const PerformerHome = () => {
   );
 };
 
-export default PerformerHome;
+export default ViewerHome;

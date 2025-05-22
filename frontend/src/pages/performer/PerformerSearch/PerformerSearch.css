@@ -1,0 +1,104 @@
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.search-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #121212;
+  min-height: 100vh;
+  color: #fff;
+  font-family: SUIT, sans-serif;
+}
+
+.search-input-group {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  color: white;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  pointer-events: none; /* 클릭 방지 */
+  font-size: 14px;
+}
+
+.district-filter, .size-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.venue-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  padding-top: 12px;
+  justify-items: center;
+}
+
+.venue-card {
+  min-width: 130px;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.venue-card:hover {
+  transform: scale(1.02);
+}
+
+.venue-card img {
+  width: 100%;
+  height: 160px;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+
+.venue-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 8px 12px 4px;
+}
+
+.venue-subtext {
+  font-size: 12px;
+  color: #aaa;
+  margin: 0 12px 12px;
+}
+
+.city-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.city-btn {
+  background-color: #1a1a1a;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #ccc;
+  white-space: nowrap;
+  cursor: pointer;
+}

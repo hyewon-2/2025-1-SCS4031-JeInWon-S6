@@ -1,0 +1,117 @@
+/* PerformerMypage.css */
+.performer-mypage-container {
+  background-color: #121212;
+  color: #fff;
+  font-family: 'SUIT', sans-serif;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.performer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.performer-profile-circle {
+  width: 60px;
+  height: 60px;
+  background-color: #555;
+  border-radius: 50%;
+}
+
+.performer-header-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.performer-edit-btn {
+  background-color: #333;
+  color: white;
+  padding: 6px 12px;
+  border: 1px solid #777;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.performer-section {
+  margin-bottom: 32px;
+}
+
+.performer-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.performer-card-list {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.performer-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 8px;
+  width: 100px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.performer-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+
+.performer-card span {
+  font-size: 13px;
+  color: #ddd;
+}
+
+.performer-post {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.performer-user {
+  font-size: 13px;
+  color: #ccc;
+}
+
+.performer-post-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.performer-post-body {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+.performer-recommendation {
+  background-color: #1a1a1a;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.performer-recommend-title {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.performer-recommendation-info {
+  font-size: 13px;
+  color: #ccc;
+  margin-top: 6px;
+}

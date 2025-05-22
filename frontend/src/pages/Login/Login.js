@@ -20,9 +20,9 @@ const Login = () => {
     localStorage.setItem('user', JSON.stringify({ id, type }));
 
     if (type === 'performer') {
-      navigate('/performer/main');
+      navigate('/performer/home');
     } else if (type === 'viewer') {
-      navigate('/viewer/main');
+      navigate('/viewer/home');
     } else {
       alert('잘못된 접근입니다.');
     }

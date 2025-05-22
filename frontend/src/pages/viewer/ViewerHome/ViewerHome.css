@@ -1,0 +1,347 @@
+.viewer-home-container {
+  background-color: #121212;
+  color: white;
+  padding: 16px;
+  font-family: 'SUIT', sans-serif;
+}
+
+.viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.viewer-logout-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-right: 6px;
+}
+.viewer-banner-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+.viewer-banner-image {
+  width: 100%;
+  height: 104%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.viewer-banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0 20px 46px 20px;
+}
+
+.viewer-banner-main-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.viewer-banner-sub-title {
+  font-size: 12px;
+  color: #ddd;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.viewer-banner-button {
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 7px 16px;
+  border-radius: 20px;
+}
+
+.viewer-banner-button-text {
+  font-size: 12px;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer-section-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 20px 10px;
+}
+
+.viewer-section-title {
+   font-size: 18px;
+   font-weight: bold;
+}
+.category-title {
+   text-align: center;
+}
+.recommend-main-title {
+   padding-left: 20px;
+}
+.viewer-more-text {
+  font-size: 12px;
+  color: #888;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.viewer-category-section {
+  margin-bottom: 20px;
+}
+.viewer-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.viewer-category-card {
+    background-color: #1a1a1a;
+    border: 1px solid #aaa;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    color: #ccc;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.viewer-category-icon {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+.viewer-category-label {
+  font-size: 14px;
+  font-family: 'SUIT';
+}
+.viewer-category-card.active {
+  border-color: #fff;
+  color: #fff;
+  font-weight: bold;
+}
+.viewer-location-section {
+  margin-bottom: 20px;
+}
+.viewer-city-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.viewer-city-btn {
+  background-color: #1a1a1a;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #ccc;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.viewer-city-btn.selected {
+  background-color: #333;
+  color: #fff;
+}
+
+.viewer-district-scroll-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 16px;
+  padding-bottom: 10px;
+}
+
+.viewer-district-page {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.viewer-district-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.viewer-district-btn {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  color: #aaa;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.viewer-district-btn.selected {
+  background-color: #333;
+  color: #fff;
+}
+.viewer-ranking-section,
+.viewer-popular-section,
+.viewer-recommend-section {
+  margin-bottom: 20px;
+}
+.viewer-genre-filter {
+  display: flex;
+  gap: 10px;
+  padding: 0 20px 10px;
+}
+.viewer-genre-btn {
+  background-color: #1a1a1a;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.viewer-genre-btn.active {
+  background-color: #2c2c2c;
+  font-weight: 600;
+}
+
+.viewer-ranking-cards,
+.viewer-popular-cards {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 20px 20px;
+}
+.viewer-venue-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 20px 20px;
+}
+.viewer-ranking-card,
+.viewer-popular-card {
+  min-width: 120px;
+  height: 180px;
+  background-color: #1E1E1E;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.viewer-venue-card {
+     min-width: 130px;
+     background-color: #1E1E1E;
+     border-radius: 10px;
+     overflow: hidden;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: flex-start;
+     padding: 8px;
+     gap: 6px;
+}
+.viewer-ranking-img,
+.viewer-popular-img-placeholder {
+  width: 100%;
+  height: 140px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+.viewer-ranking-pick,
+.viewer-popular-pick {
+  font-size: 12px;
+  color: white;
+  margin-top: 0px;
+}
+.viewer-venue-image {
+  min-width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.viewer-venue-name {
+  font-size: 13px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+.viewer-recommend-sub {
+  font-size: 13px;
+  color: #aaa;
+  margin: 0 20px 10px;
+}
+/* 베스트 리뷰 */
+.viewer-best-review-section {
+  padding: 20px 12px 10px;
+  margin: 0 20px 20px;
+  border: 1px solid #444;
+  border-radius: 12px;
+  background-color: #1E1E1E;
+  min-height: 200px;
+}
+.viewer-best-review-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+  color: #121212;
+}
+.viewer-best-review-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.viewer-user-id {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.viewer-star-row {
+  display: flex;
+  gap: 2px;
+}
+
+.viewer-review-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.viewer-review-content {
+  font-size: 11px;
+  color: #555;
+}
