@@ -1,0 +1,44 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.bottom-tab {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-top: 1px solid #333;
+  position: sticky;
+  bottom: 0;
+}
+
+.bottom-tab a {
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  text-decoration: none;
+  flex: 1;
+}
+
+.bottom-tab img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+}
+
+.bottom-tab a.active img {
+  opacity: 1;
+}
+
+.bottom-tab a span {
+  display: block;
+  margin-top: 2px;
+}
