@@ -1,97 +1,148 @@
 .calendar-container {
   background-color: #121212;
   color: white;
-  padding: 16px;
+  padding: 24px;
   font-family: 'SUIT', sans-serif;
   min-height: 100vh;
 }
 
+/* 헤더 */
 .calendar-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  font-size: 18px;
+  gap: 20px;
+  font-size: 20px;
   font-weight: bold;
   margin-bottom: 12px;
 }
 
-.calendar-month {
-  color: white;
-}
-
+/* 요일 라벨 */
 .calendar-days-row {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  color: #bbb;
-  font-size: 13px;
-  margin-bottom: 4px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #cccccc;
 }
 
 .calendar-day-label {
-  padding: 4px 0;
+  padding: 6px 0;
 }
 
+/* 날짜 격자 */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  gap: 4px;
-  margin-bottom: 16px;
+  row-gap: 12px;
+  column-gap: 0;
+  margin-bottom: 20px;
 }
 
+/* 날짜 셀 */
 .calendar-day {
-  padding: 6px 0;
-  color: white;
-  font-size: 14px;
-}
-
-.highlight {
-  background-color: yellow;
-  color: black;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 40px;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
 }
-
-.calendar-info {
+.calendar-day:hover {
+  background-color: #1f1f1f;
+  border-radius: 6px;
+}
+.calendar-day-content {
   display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  background-color: #000;
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  border-top: 1px solid #333;
-  border-bottom: 1px solid #333;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1;
+}
+/* 빈 날짜 (월 시작 전) */
+.empty-day {
+  visibility: hidden;
 }
 
+/* 오늘 날짜 하이라이트 */
+.performer-highlight {
+  width: 6px;
+  height: 6px;
+  background-color: #F6859A;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: inline-block;
+}
+/* 선택된 날짜 정보 */
+.calendar-info {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #ccc;
+}
+
+/* 공연 리스트 */
 .calendar-event-list {
-  padding-bottom: 40px;
+  padding: 0 12px;
 }
 
-.calendar-event-card {
-  border-bottom: 1px solid #333;
-  padding: 8px 4px;
-}
-
-.calendar-event-date {
-  font-size: 13px;
-  color: #bbb;
-  margin-bottom: 4px;
+.performer-calendar-event-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 6px 12px;
+  margin-bottom: 16px;
+  border: 1px solid #333;
+  color: white;
 }
 
 .calendar-event-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
-  color: #fff;
+  margin-bottom: 6px;
+  margin-top: 6px;
+
 }
 
 .calendar-event-sub {
-  font-size: 12px;
-  color: #bbb;
+  font-size: 14px;
+  color: #cccccc;
+}
+.cancel-button {
+  padding: 10px 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+  line-height: 1;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.cancel-button:hover {
+  background-color: #333;
+}
+.event-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.swal2-custom-title {
+  font-size: 20px !important;
+}
+.Swal.fire
+.swal2-popup-size { font-size: 14px; }
+.swal2-confirm-button { font-size: 13px; }
+.swal2-cancel-button { font-size: 13px; }
+.swal2-title {
+  font-size: 20px !important;
 }

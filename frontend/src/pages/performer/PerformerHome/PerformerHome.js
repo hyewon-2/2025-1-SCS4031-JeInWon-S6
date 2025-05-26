@@ -28,15 +28,28 @@ const PerformerHome = () => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     if (selectedCity && selectedDistrict) {
-      navigate(`/${category.toLowerCase()}?city=${selectedCity}&district=${selectedDistrict}`);
+      handleSearch(category, selectedCity, selectedDistrict);
     } else {
       alert('지역(시/구)을 모두 선택해주세요.');
     }
   };
 
+  const handleSearch = (category = selectedCategory, city = selectedCity, district = selectedDistrict) => {
+    if (!city || !district || !category) {
+      alert('모든 항목을 선택해주세요.');
+      return;
+    }
+
+    if (category === '축제') {
+      navigate(`/performer/events?city=${city}&district=${district}&category=${category}`);
+    } else {
+      navigate(`/performer/venues?city=${city}&district=${district}&category=${category}`);
+    }
+  };
+
   const handleCommunityMorePress = () => {
-      navigate('/community');
-    };
+    navigate('/community');
+  };
 
   return (
     <div className="home-container">
@@ -50,32 +63,31 @@ const PerformerHome = () => {
         <div className="banner-text">
           <p className="label">공연비 지원</p>
           <h2>여름이 온다,<br />무대를 준비하자!</h2>
-          <p className="sub">전국 페스티벌부터 지역 공연까지,<br></br>
-          지금 바로 참여하세요</p>
+          <p className="sub">전국 페스티벌부터 지역 공연까지,<br />지금 바로 참여하세요</p>
           <button className="banner-btn">자세히 보기</button>
         </div>
         <img src="/images/home/banner_right.png" className="banner-image" alt="배너" />
       </section>
 
-    <section className="category-section">
-      <h3 className="section-title">🎯 맞춤 공연장 찾기</h3>
-      <div className="category-grid">
-        {categories.map((cat) => {
-          const isSelected = selectedCategory === cat;
-          const icon = cat === '축제' ? <FaMusic /> : cat === '대관' ? <FaHome /> : <FaStreetView />;
-          return (
-            <button
-              key={cat}
-              className={`category-card ${isSelected ? 'active' : ''}`}
-              onClick={() => handleCategoryClick(cat)}
-            >
-              <div className="category-icon">{icon}</div>
-              <div className="category-label">{cat}</div>
-            </button>
-          );
-        })}
-      </div>
-    </section>
+      <section className="category-section">
+        <h3 className="section-title">🎯 맞춤 공연장 찾기</h3>
+        <div className="category-grid">
+          {categories.map((cat) => {
+            const isSelected = selectedCategory === cat;
+            const icon = cat === '축제' ? <FaMusic /> : cat === '대관' ? <FaHome /> : <FaStreetView />;
+            return (
+              <button
+                key={cat}
+                className={`category-card ${isSelected ? 'active' : ''}`}
+                onClick={() => handleCategoryClick(cat)}
+              >
+                <div className="category-icon">{icon}</div>
+                <div className="category-label">{cat}</div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
 
       <section className="location-section">
         <div className="city-scroll">
@@ -95,7 +107,6 @@ const PerformerHome = () => {
           {Array.from({ length: Math.ceil((districtsByCity[selectedCity] || []).length / 8) }, (_, i) => {
             const pageItems = districtsByCity[selectedCity].slice(i * 8, (i + 1) * 8);
             const rows = [pageItems.slice(0, 4), pageItems.slice(4, 8)];
-
             return (
               <div className="district-page" key={i}>
                 {rows.map((row, rowIndex) => (
@@ -133,11 +144,7 @@ const PerformerHome = () => {
         <h3>추천 공연장</h3>
         <p className="recommend-sub">○○님 취향 저격! 공연장</p>
         <div className="venue-scroll">
-          {[
-            { img: '/images/home/recom_00.png', title: 'musinsa garage' },
-            { img: '/images/home/recom_01.png', title: '제비다방' },
-            { img: '/images/home/recom_02.png', title: 'A.O.R' }
-          ].map((venue, idx) => (
+          {[{ img: '/images/home/recom_00.png', title: 'musinsa garage' }, { img: '/images/home/recom_01.png', title: '제비다방' }, { img: '/images/home/recom_02.png', title: 'A.O.R' }].map((venue, idx) => (
             <div key={idx} className="venue-card">
               <img src={venue.img} alt={venue.title} className="venue-image" />
               <p className="venue-name">{venue.title}</p>

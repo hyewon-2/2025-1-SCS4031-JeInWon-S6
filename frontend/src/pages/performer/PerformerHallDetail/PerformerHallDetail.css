@@ -61,3 +61,41 @@
 .venue-info-box p {
   font-size: 14px;
 }
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.date-button {
+  padding: 10px;
+  background-color: #222;
+  border: 1px solid #666;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'SUIT', sans-serif;
+}
+
+.date-button.selected {
+  background-color: #333;
+  color: white;
+}
+
+.reserve-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #FFE27A, #FF617F);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'SUIT', sans-serif;
+}
+
+.reserve-button:disabled {
+  background: linear-gradient(to right, #FFE27A, #FF617F);
+  cursor: not-allowed;
+}

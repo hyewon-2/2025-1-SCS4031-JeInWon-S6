@@ -20,6 +20,8 @@ import PerformerHallDetail from './pages/performer/PerformerHallDetail/Performer
 import PerformerAIRecommendation from './pages/performer/PerformerAIRecommendation/PerformerAIRecommendation';
 import PerformerCalendar from './pages/performer/PerformerCalendar/PerformerCalendar';
 import PerformerMypage from './pages/performer/PerformerMypage/PerformerMypage';
+import PerformerEventDetail from './pages/performer/PerformerEventDetail/PerformerEventDetail';
+import PerformerEventList from './pages/performer/PerformerEventList/PerformerEventList';
 
 // 관람자 페이지
 import ViewerSignup from './pages/viewer/ViewerSignup/ViewerSignup';
@@ -29,6 +31,7 @@ import ViewerAI from './pages/viewer/ViewerAI/ViewerAI';
 import ViewerCalendar from './pages/viewer/ViewerCalendar/ViewerCalendar';
 import ViewerMypage from './pages/viewer/ViewerMypage/ViewerMypage';
 import ViewerArtistDetail from './pages/viewer/ViewerArtistDetail/ViewerArtistDetail';
+
 // 탭 레이아웃
 import PerformerTabLayout from './pages/tabs/PerformerTabLayout';
 import ViewerTabLayout from './pages/tabs/ViewerTabLayout';
@@ -71,6 +74,8 @@ function App() {
           <Route path="calendar" element={<PerformerCalendar />} />
           <Route path="profile" element={<PerformerMypage />} />
           <Route path="venues/:id" element={<PerformerHallDetail />} />
+          <Route path="events" element={<PerformerEventList />} />
+          <Route path="events/:id" element={<PerformerEventDetail />} />
         </Route>
 
         {/* 관람자 회원가입 (탭 없이 단독) */}
@@ -89,11 +94,7 @@ function App() {
         {/* 잘못된 경로 처리 */}
         <Route
           path="*"
-          element={
-            window.location.pathname.startsWith('/images/')
-              ? null
-              : <Navigate to="/select-user" replace />
-          }
+          element={<Navigate to="/select-user" replace />}
         />
       </Routes>
     </Router>
