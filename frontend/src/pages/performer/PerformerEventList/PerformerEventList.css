@@ -1,0 +1,39 @@
+.reserve-button {
+  margin-top: 10px;
+  padding: 12px;
+  background: linear-gradient(to right, #FFE27A, #FF617F);
+  border: none;
+  color: white;
+  font-size: 14px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+}
+.reserve-button:hover {
+  opacity: 0.9;
+}
+.reserve-button-card {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(to right, #FFE27A, #FF617F);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+.back-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 10;
+}

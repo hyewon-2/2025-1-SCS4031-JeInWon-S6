@@ -45,6 +45,19 @@
   gap: 8px;
   margin-bottom: 16px;
 }
+.size-btn {
+  background-color: #1a1a1a;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #ccc;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.size-filter .active{
+  background-color: #333;
+}
 
 .venue-grid {
   display: grid;
@@ -84,6 +97,7 @@
   font-size: 12px;
   color: #aaa;
   margin: 0 12px 12px;
+  text-align: center;
 }
 
 .city-scroll {
@@ -92,8 +106,7 @@
   gap: 10px;
   margin-bottom: 12px;
 }
-
-.city-btn {
+/*.city-btn {
   background-color: #1a1a1a;
   border: 1px solid #aaa;
   border-radius: 20px;
@@ -101,4 +114,4 @@
   color: #ccc;
   white-space: nowrap;
   cursor: pointer;
-}
+}*/
