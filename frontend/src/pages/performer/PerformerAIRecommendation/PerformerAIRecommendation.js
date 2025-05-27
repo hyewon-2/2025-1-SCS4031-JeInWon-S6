@@ -61,7 +61,7 @@ const getRandomSubset = (array, count) => {
 };
 
 const PerformerAIRecommendation = () => {
-  const userName = '홍길동';
+  const userName = '회원';
   const navigate = useNavigate();
   const [recommendations, setRecommendations] = useState([]);
 
@@ -76,7 +76,7 @@ const PerformerAIRecommendation = () => {
 
   return (
     <div className="ai-container">
-      <h2 className="ai-title">AI가 {userName}님의 공연을 추천했어요</h2>
+      <h2 className="ai-title">AI가 {userName}님의 공연장을 추천했어요</h2>
 
       <div className="ai-card-list">
         {recommendations.map((rec, index) => (

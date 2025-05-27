@@ -8,16 +8,28 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const type = location.state?.type || ''; // performer, viewer 구분
+  // performer / viewer 구분
+  const type = location.state?.type || '';
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     if (!id || !password) {
       alert('아이디와 비밀번호를 모두 입력해주세요.');
       return;
     }
 
     console.log('로그인 유저 타입:', type);
-    localStorage.setItem('user', JSON.stringify({ id, type }));
+
+    const userListKey = type === 'performer' ? 'performerUsers' : 'viewerUsers';
+    const users = JSON.parse(localStorage.getItem(userListKey) || '[]');
+    const found = users.find(user => user.id === id && user.password === password);
+
+    if (!found) {
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
+    // 로그인 성공 → 유저 정보 저장
+    localStorage.setItem('user', JSON.stringify({ id: found.id, type }));
 
     if (type === 'performer') {
       navigate('/performer/home');
