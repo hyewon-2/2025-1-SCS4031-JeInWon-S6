@@ -37,34 +37,36 @@ const PerformerSignup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-    !id ||
-    !password ||
-    password !== confirmPassword ||
-    selectedGenres.length === 0 ||
-    selectedDistricts.length === 0 ||
-    !bandMembers
+      !id ||
+      !password ||
+      password !== confirmPassword ||
+      selectedGenres.length === 0 ||
+      selectedDistricts.length === 0 ||
+      !bandMembers
     ) {
-    alert('모든 항목을 정확히 입력해주세요.');
-    return;
+      alert('모든 항목을 정확히 입력해주세요.');
+      return;
     }
 
-  const userData = {
-    id,
-    password,
-    genres: selectedGenres.includes('기타')
-    ? [...selectedGenres.filter((g) => g !== '기타'), customGenre]
-    : selectedGenres,
-    region: {
-    city: selectedRegion,
-    districts: selectedDistricts,
-    },
-    bandMembers,
+    const userData = {
+      id,
+      password,
+      genres: selectedGenres.includes('기타')
+        ? [...selectedGenres.filter((g) => g !== '기타'), customGenre]
+        : selectedGenres,
+      region: {
+        city: selectedRegion,
+        districts: selectedDistricts,
+      },
+      bandMembers,
+      type: 'performer',
     };
 
-  console.log('유저 정보 저장 완료:', userData);
-  localStorage.setItem('user', JSON.stringify(userData));
-  alert('회원가입 완료!');
-  navigate('/login');
+    const existing = JSON.parse(localStorage.getItem('performerUsers') || '[]');
+    localStorage.setItem('performerUsers', JSON.stringify([...existing, userData]));
+
+    alert('회원가입 완료!');
+    navigate('/login', { state: { type: 'performer' } });
   };
 
   return (
