@@ -43,9 +43,11 @@ const ViewerSignup = () => {
       type: 'viewer',
     };
 
-    localStorage.setItem('viewer_user', JSON.stringify(userData));
+    const existing = JSON.parse(localStorage.getItem('viewerUsers') || '[]');
+    localStorage.setItem('viewerUsers', JSON.stringify([...existing, userData]));
+
     alert('회원가입 완료!');
-    navigate('/login');
+    navigate('/login', { state: { type: 'viewer' } });
   };
 
   return (
@@ -55,6 +57,7 @@ const ViewerSignup = () => {
         <input className="signup-input" type="text" placeholder="아이디" value={id} onChange={e => setId(e.target.value)} />
         <input className="signup-input" type="password" placeholder="비밀번호" value={password} onChange={e => setPassword(e.target.value)} />
         <input className="signup-input" type="password" placeholder="비밀번호 확인" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+
         <label className="signup-label">관람 지역 (도시)</label>
         <div className="signup-checkbox-container">
           {Object.keys(regionOptions).map(region => (
