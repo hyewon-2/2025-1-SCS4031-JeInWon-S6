@@ -10,9 +10,44 @@ const PerformerCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(today.toISOString().slice(0, 10));
   const [performerReservations, setPerformerReservations] = useState([]);
 
+  const extractEventDates = (dateRange) => {
+    const [startStr, endStr] = dateRange.split('~').map(str => str.trim());
+    const start = new Date(startStr.replace(/\./g, '-'));
+    const end = new Date(endStr.replace(/\./g, '-'));
+    const dates = [];
+    let cur = new Date(start);
+    while (cur <= end) {
+      dates.push(cur.toISOString().split('T')[0]);
+      cur.setDate(cur.getDate() + 1);
+    }
+    return dates;
+  };
+
+  const loadReservations = () => {
+    const venue = JSON.parse(localStorage.getItem('performerReservations') || '[]');
+    const events = JSON.parse(localStorage.getItem('eventReservations') || '[]');
+
+    const venueWithType = venue.map(v => ({
+      ...v,
+      type: 'venue'
+    }));
+
+    const expandedEvents = events.flatMap(ev =>
+      extractEventDates(ev.date).map(date => ({
+        id: ev.id,
+        name: ev.name,
+        region: ev.city + ' ' + ev.district,
+        size: '축제',
+        date: date,
+        type: 'event'
+      }))
+    );
+
+    setPerformerReservations([...venueWithType, ...expandedEvents]);
+  };
+
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('performerReservations') || '[]');
-    setPerformerReservations(stored);
+    loadReservations();
   }, []);
 
   const handlePrevMonth = () => {
@@ -40,7 +75,6 @@ const PerformerCalendar = () => {
 
     const days = [];
 
-    // 시작 요일만큼 빈 칸 추가
     for (let i = 0; i < startDay; i++) {
       days.push({ day: null, dateString: null, hasReservation: false });
     }
@@ -57,7 +91,7 @@ const PerformerCalendar = () => {
   const days = getDaysInMonth(currentYear, currentMonth);
   const filteredEvents = performerReservations.filter(e => e.date === selectedDate);
 
-  const handleCancel = (id) => {
+  const handleCancel = (id, type) => {
     Swal.fire({
       title: '예약을 취소하시겠습니까?',
       icon: 'warning',
@@ -69,28 +103,34 @@ const PerformerCalendar = () => {
       height: '100px',
       width: '290px',
       customClass: {
-          title: 'swal2-custom-title'
-        }
+        title: 'swal2-custom-title'
+      }
     }).then((result) => {
       if (result.isConfirmed) {
-        const updated = performerReservations.filter(r => r.id !== id);
-        localStorage.setItem('performerReservations', JSON.stringify(updated));
-        setPerformerReservations(updated);
+        if (type === 'venue') {
+          const updated = JSON.parse(localStorage.getItem('performerReservations') || '[]')
+            .filter(r => r.id !== id);
+          localStorage.setItem('performerReservations', JSON.stringify(updated));
+        } else if (type === 'event') {
+          const updated = JSON.parse(localStorage.getItem('eventReservations') || '[]')
+            .filter(r => r.id !== id);
+          localStorage.setItem('eventReservations', JSON.stringify(updated));
+        }
 
+        loadReservations(); // 화면 다시 로딩
         Swal.fire({
           title: '취소 완료',
           text: '예약이 성공적으로 취소되었습니다.',
           icon: 'success',
           timer: 1500,
           customClass: {
-              title: 'swal2-custom-title'
-            },
+            title: 'swal2-custom-title'
+          },
           showConfirmButton: false
         });
       }
     });
   };
-
 
   return (
     <div className="calendar-container">
@@ -100,13 +140,11 @@ const PerformerCalendar = () => {
         <FaChevronRight onClick={handleNextMonth} style={{ cursor: 'pointer' }} />
       </div>
 
-        <div className="calendar-days-row">
-          {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => (
-            <div key={i} className="calendar-day-label">
-              {d}
-            </div>
-          ))}
-        </div>
+      <div className="calendar-days-row">
+        {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => (
+          <div key={i} className="calendar-day-label">{d}</div>
+        ))}
+      </div>
 
       <div className="calendar-grid">
         {days.map((day, i) => (
@@ -129,21 +167,23 @@ const PerformerCalendar = () => {
 
       <div className="calendar-info">
         <span>{selectedDate.replace(/-/g, '.')} ({new Date(selectedDate).toLocaleDateString('ko-KR', { weekday: 'short' })})</span>
-        <span>{filteredEvents.length}개의 공연이 있습니다</span>
+        <span>{filteredEvents.length}개의 예약이 있습니다</span>
       </div>
 
       <div className="calendar-event-list">
         {filteredEvents.map(event => (
-          <div key={event.id} className="performer-calendar-event-card">
+          <div key={event.id + event.date} className="performer-calendar-event-card">
             <p className="calendar-event-title">{event.name}</p>
             <p className="calendar-event-sub">지역: {event.region}</p>
-            <p className="calendar-event-sub">규모: {event.size}명</p>
+            <p className="calendar-event-sub">
+              {event.size === '축제' ? '종류: 축제' : `규모: ${event.size}명`}
+            </p>
             <button
-                className="cancel-button"
-                onClick={() => handleCancel(event.id)}
-              >
-                예약 취소
-              </button>
+              className="cancel-button"
+              onClick={() => handleCancel(event.id, event.type)}
+            >
+              예약 취소
+            </button>
           </div>
         ))}
       </div>

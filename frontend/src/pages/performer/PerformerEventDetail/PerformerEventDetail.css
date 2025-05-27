@@ -4,6 +4,7 @@
   padding: 54px 24px 2px;
   font-family: 'SUIT', sans-serif;
   box-sizing: border-box;
+  position: relative;
 }
 
 .event-detail-card {
