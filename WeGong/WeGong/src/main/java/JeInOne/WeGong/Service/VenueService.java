@@ -8,6 +8,7 @@ import JeInOne.WeGong.Entity.Venue;
 import JeInOne.WeGong.Repository.VenueRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +61,21 @@ public class VenueService {
     @Transactional(readOnly = true)
     public List<VenueResponseDTO> getAllVenues() {
         return venueRepository.findAll().stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<VenueResponseDTO> getSortedVenues(String sort) {
+
+        List<Venue> venues = switch (sort.toLowerCase()) {
+            case "name" -> venueRepository.findAll(Sort.by("name").ascending());
+            case "capacity" -> venueRepository.findAll(Sort.by("capacity").descending());
+            case "region" -> venueRepository.findAll(Sort.by("city").ascending().and(Sort.by("district").ascending()));
+            default -> throw new IllegalArgumentException("지원하지 않는 정렬 기준입니다: " + sort);
+        };
+
+        return venues.stream()
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }

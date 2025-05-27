@@ -35,4 +35,10 @@ public class VenueController {
         List<VenueResponseDTO> venues = venueService.getAllVenues();
         return ResponseEntity.ok(venues);
     }
+
+    @GetMapping(params = "sort")
+    public ResponseEntity<List<VenueResponseDTO>> getSortedVenues(@RequestParam String sort) {
+        List<VenueResponseDTO> sortedVenues = venueService.getSortedVenues(sort);
+        return ResponseEntity.ok(sortedVenues);
+    }
 }
