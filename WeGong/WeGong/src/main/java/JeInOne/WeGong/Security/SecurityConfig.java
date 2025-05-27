@@ -26,6 +26,10 @@ public class SecurityConfig {
                                 "/api/venues",
                                 "/api/venues/**",
                                 "/api/venues/sort",
+                                "/api/performance",
+                                "/api/performance/**",
+                                "/api/events",
+                                "/api/events/**",
                                 "/h2-console/**"
                         ).permitAll()
 
