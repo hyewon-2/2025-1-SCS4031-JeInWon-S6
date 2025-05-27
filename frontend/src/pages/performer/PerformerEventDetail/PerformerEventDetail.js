@@ -4,33 +4,54 @@ import { FaArrowLeft } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import './PerformerEventDetail.css';
 
-const dummyEvents = [
+const eventList = [
   {
-    id: '1',
+    id: 1,
     name: '강남페스티벌',
     city: '서울',
     district: '강남구',
     category: '축제',
-    date: '2025.04.25 ~ 2025.04.26',
-    image: '/images/events/event_000.png',
+    date: '2025.05.24 ~ 2025.05.25',
+    image: '/images/events/event_000.png'
   },
   {
-    id: '2',
-    name: '영등포불꽃축제',
+    id: 2,
+    name: '강남신한뮤직쇼',
     city: '서울',
-    district: '영등포구',
+    district: '강남구',
     category: '축제',
-    date: '2025.05.10 ~ 2025.05.11',
-    image: '/images/events/event_001.png',
+    date: '2025.05.26 ~ 2025.05.27',
+    image: '/images/events/event_001.png'
   },
+  {
+    id: 3,
+    name: '강남나이트페스티벌',
+    city: '서울',
+    district: '강남구',
+    category: '축제',
+    date: '2025.06.01 ~ 2025.06.02',
+    image: '/images/events/event_002.png'
+  },
+  {
+    id: 4,
+    name: '강남거리문화축제',
+    city: '서울',
+    district: '강남구',
+    category: '축제',
+    date: '2025.06.05 ~ 2025.06.06',
+    image: '/images/events/event_003.png'
+  }
 ];
 
 const PerformerEventDetail = () => {
   const { id } = useParams();
-  const event = dummyEvents.find(e => String(e.id) === id);
   const navigate = useNavigate();
 
-  if (!event) return <div className="event-detail-container">이벤트를 찾을 수 없습니다.</div>;
+  const event = eventList.find(e => String(e.id) === id);
+
+  if (!event) {
+    return <div className="event-detail-container">이벤트를 찾을 수 없습니다.</div>;
+  }
 
   const handleReserve = () => {
     const newReservation = {

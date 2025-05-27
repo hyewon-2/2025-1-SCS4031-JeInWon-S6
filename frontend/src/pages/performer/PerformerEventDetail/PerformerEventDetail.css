@@ -4,6 +4,7 @@
   padding: 54px 24px 2px;
   font-family: 'SUIT', sans-serif;
   box-sizing: border-box;
+  position: relative; /* feature/new-task 쪽에서 추가된 속성 */
 }
 
 .event-detail-card {
@@ -33,6 +34,7 @@
   margin: 0 16px 16px;
   line-height: 1.5;
 }
+
 .reserve-button {
   padding: 10px 12px;
   background-color: #495BFB;
@@ -48,4 +50,3 @@
 .reserve-button:hover {
   background-color: #3b49cc;
 }
-
