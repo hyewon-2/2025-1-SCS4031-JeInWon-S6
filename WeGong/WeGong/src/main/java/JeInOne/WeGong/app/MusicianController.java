@@ -5,6 +5,7 @@ import JeInOne.WeGong.DTO.MusicianLoginRequest;
 import JeInOne.WeGong.DTO.MusicianLoginResponse;
 import JeInOne.WeGong.Service.MusicianService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,11 @@ public class MusicianController {
 
     @PostMapping("/login")
     public ResponseEntity<MusicianLoginResponse> login(@RequestBody MusicianLoginRequest request) {
-        MusicianLoginResponse response = musicianService.login(request);
-        return ResponseEntity.ok(response);
+        try {
+            MusicianLoginResponse response = musicianService.login(request);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 }
