@@ -19,6 +19,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/musician/signup",
                                 "/api/musician/login",
+                                "/api/musician/mypage",
+                                "/api/musician/mypage/**",
                                 "/api/listener/signup",
                                 "/api/listener/login",
                                 "/api/venues",

@@ -1,7 +1,6 @@
 package JeInOne.WeGong.app;
 
 import JeInOne.WeGong.DTO.*;
-import JeInOne.WeGong.Security.SecurityUtil;
 import JeInOne.WeGong.Service.LikeService;
 import JeInOne.WeGong.Service.MusicianService;
 import jakarta.validation.Valid;
@@ -9,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/musician/mypage")
@@ -45,22 +42,22 @@ public class MusicianMyPageController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/liked-venues")
-    public ResponseEntity<List<VenueResponseDTO>> getLikedVenues() {
-        Long musicianId = SecurityUtil.getCurrentMusicianId();
-        return ResponseEntity.ok(likeService.getLikedVenues(musicianId));
-    }
-
-    @GetMapping("/liked-events")
-    public ResponseEntity<List<EventResponseDTO>> getLikedEvents() {
-        Long musicianId = SecurityUtil.getCurrentMusicianId();
-        return ResponseEntity.ok(likeService.getLikedEvents(musicianId));
-    }
-
-    @GetMapping("/liked-performances")
-    public ResponseEntity<List<PerformanceResponseDTO>> getLikedPerformances() {
-        Long musicianId = SecurityUtil.getCurrentMusicianId();
-        return ResponseEntity.ok(likeService.getLikedPerformances(musicianId));
-    }
+//    @GetMapping("/liked-venues")
+//    public ResponseEntity<List<VenueResponseDTO>> getLikedVenues() {
+//        Long musicianId = SecurityUtil.getCurrentMusicianId();
+//        return ResponseEntity.ok(likeService.getLikedVenues(musicianId));
+//    }
+//
+//    @GetMapping("/liked-events")
+//    public ResponseEntity<List<EventResponseDTO>> getLikedEvents() {
+//        Long musicianId = SecurityUtil.getCurrentMusicianId();
+//        return ResponseEntity.ok(likeService.getLikedEvents(musicianId));
+//    }
+//
+//    @GetMapping("/liked-performances")
+//    public ResponseEntity<List<PerformanceResponseDTO>> getLikedPerformances() {
+//        Long musicianId = SecurityUtil.getCurrentMusicianId();
+//        return ResponseEntity.ok(likeService.getLikedPerformances(musicianId));
+//    }
 
 }

@@ -1,5 +1,6 @@
 package JeInOne.WeGong.DTO;
 
+import JeInOne.WeGong.Entity.Venue;
 import JeInOne.WeGong.Enums.musicGenre;
 import lombok.*;
 
@@ -24,4 +25,22 @@ public class VenueResponseDTO {
     private String contact;
     private Set<musicGenre> musicGenres;
     private List<FacilityResponseDTO> facilities;
+
+    public static VenueResponseDTO fromEntity(Venue venue) {
+        return VenueResponseDTO.builder()
+                .id(venue.getId())
+                .name(venue.getName())
+                .rental(venue.isRental())
+                .eventhosting(venue.isEventhosting())
+                .isIndoor(venue.isIndoor())
+                .capacity(venue.getCapacity())
+                .city(venue.getCity())
+                .district(venue.getDistrict())
+                .contact(venue.getContact())
+                .musicGenres(venue.getMusicGenres())
+//                .facilities(venue.getFacilities().stream()
+//                        .map(FacilityResponseDTO::fromEntity)
+//                        .toList())
+                .build();
+    }
 }
