@@ -30,6 +30,8 @@ public class PerformanceResponseDTO {
 
     private String venueName;
 
+    private String venueSiteLink;
+
     private List<String> musicianNames;
 
     public static PerformanceResponseDTO fromEntity(Performance performance) {
@@ -43,6 +45,7 @@ public class PerformanceResponseDTO {
                 .ticketPriceOnline(performance.getTicketPriceOnline())
                 .ticketPriceOnsite(performance.getTicketPriceOnsite())
                 .venueName(performance.getVenue().getName())
+                .venueSiteLink(performance.getVenue().getSiteLink())
                 .musicianNames(performance.getMusicians().stream()
                         .map(Musician::getMusicianName)
                         .collect(Collectors.toList()))

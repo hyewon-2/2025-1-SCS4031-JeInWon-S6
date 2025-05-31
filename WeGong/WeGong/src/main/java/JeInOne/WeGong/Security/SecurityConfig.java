@@ -23,6 +23,8 @@ public class SecurityConfig {
                                 "/api/musician/mypage/**",
                                 "/api/listener/signup",
                                 "/api/listener/login",
+                                "/api/business-owner",
+                                "/api/business-owner/**",
                                 "/api/venues",
                                 "/api/venues/**",
                                 "/api/venues/sort",

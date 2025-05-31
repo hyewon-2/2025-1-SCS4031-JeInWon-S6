@@ -51,7 +51,7 @@ public class MusicianService {
     }
 
     public MusicianMyPage getMyPage() {
-        Long musicianID = SecurityUtil.getCurrentMusicianId();
+        Long musicianID = SecurityUtil.getCurrentUserId();
 
         Musician musician = musicianRepository.findById(musicianID)
                 .orElseThrow(() -> new IllegalArgumentException("해당 공연자가 존재하지 않습니다."));
@@ -68,7 +68,7 @@ public class MusicianService {
     }
 
     public void updateInfo(MusicianUpdateRequest request) {
-        Long musicianID = SecurityUtil.getCurrentMusicianId();
+        Long musicianID = SecurityUtil.getCurrentUserId();
         Musician musician = musicianRepository.findById(musicianID)
                 .orElseThrow(() -> new NoSuchElementException("해당 공연자가 존재하지 않습니다."));
 
@@ -83,7 +83,7 @@ public class MusicianService {
     }
 
     public void updatePassword(PasswordChangeRequest dto) {
-        Long musicianID = SecurityUtil.getCurrentMusicianId();
+        Long musicianID = SecurityUtil.getCurrentUserId();
 
         Musician musician = musicianRepository.findById(musicianID)
                 .orElseThrow(() -> new NoSuchElementException("해당 공연자가 존재하지 않습니다."));
@@ -96,7 +96,7 @@ public class MusicianService {
     }
 
     public void deleteMusician() {
-        Long musicianID = SecurityUtil.getCurrentMusicianId();
+        Long musicianID = SecurityUtil.getCurrentUserId();
 
         Musician musician = musicianRepository.findById(musicianID)
                 .orElseThrow(() -> new NoSuchElementException("해당 공연자가 존재하지 않습니다."));

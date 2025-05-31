@@ -44,19 +44,19 @@ public class MusicianMyPageController {
 
 //    @GetMapping("/liked-venues")
 //    public ResponseEntity<List<VenueResponseDTO>> getLikedVenues() {
-//        Long musicianId = SecurityUtil.getCurrentMusicianId();
+//        Long musicianId = SecurityUtil.getCurrentUserId();
 //        return ResponseEntity.ok(likeService.getLikedVenues(musicianId));
 //    }
 //
 //    @GetMapping("/liked-events")
 //    public ResponseEntity<List<EventResponseDTO>> getLikedEvents() {
-//        Long musicianId = SecurityUtil.getCurrentMusicianId();
+//        Long musicianId = SecurityUtil.getCurrentUserId();
 //        return ResponseEntity.ok(likeService.getLikedEvents(musicianId));
 //    }
 //
 //    @GetMapping("/liked-performances")
 //    public ResponseEntity<List<PerformanceResponseDTO>> getLikedPerformances() {
-//        Long musicianId = SecurityUtil.getCurrentMusicianId();
+//        Long musicianId = SecurityUtil.getCurrentUserId();
 //        return ResponseEntity.ok(likeService.getLikedPerformances(musicianId));
 //    }
 

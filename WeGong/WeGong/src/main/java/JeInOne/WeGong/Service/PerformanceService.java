@@ -1,5 +1,6 @@
 package JeInOne.WeGong.Service;
 
+import JeInOne.WeGong.DTO.PerformanceCreateFromRequest;
 import JeInOne.WeGong.DTO.PerformanceRequestDTO;
 import JeInOne.WeGong.DTO.PerformanceResponseDTO;
 
@@ -11,4 +12,6 @@ public interface PerformanceService {
     List<PerformanceResponseDTO> getAllPerformances();
     void updatePerformance(Long id, PerformanceRequestDTO dto);
     void deletePerformance(Long id);
+
+    Long createPerformanceFromRentalRequest(PerformanceCreateFromRequest dto);
 }
