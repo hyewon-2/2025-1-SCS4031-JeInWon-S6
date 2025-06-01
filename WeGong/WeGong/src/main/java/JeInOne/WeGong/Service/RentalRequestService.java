@@ -10,6 +10,7 @@ import JeInOne.WeGong.Repository.MusicianRepository;
 import JeInOne.WeGong.Repository.RentalRequestRepository;
 import JeInOne.WeGong.Repository.VenueRepository;
 import JeInOne.WeGong.Security.SecurityUtil;
+import JeInOne.WeGong.exception.UnauthorizedException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -68,9 +69,32 @@ public class RentalRequestService {
     }
 
     @Transactional
-    public void approveRequest(Long requestId) {
+    public void approveRequest(Long requestId, Long ownerId) {
         RentalRequest request = rentalRequestRepository.findById(requestId)
-                .orElseThrow( () -> new EntityNotFoundException("Rental request not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Rental request not found"));
+
+        if (!request.getVenue().getBusinessOwner().getId().equals(ownerId))
+            throw new UnauthorizedException("승인 권한이 없습니다.");
+
+        if (request.getStatus() != RequestStatus.PENDING)
+            throw new IllegalStateException("이미 처리된 신청입니다.");
+
         request.approve();
+    }
+
+    @Transactional
+    public void rejectRequest(Long requestId, Long ownerId) {
+        RentalRequest request = rentalRequestRepository.findById(requestId)
+                .orElseThrow(() -> new EntityNotFoundException("신청을 찾을 수 없습니다."));
+
+        if (!request.getVenue().getBusinessOwner().getId().equals(ownerId)) {
+            throw new UnauthorizedException("권한이 없습니다.");
+        }
+
+        if (request.getStatus() != RequestStatus.PENDING) {
+            throw new IllegalStateException("이미 처리된 신청입니다.");
+        }
+
+        request.reject();
     }
 }
