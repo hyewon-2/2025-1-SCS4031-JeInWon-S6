@@ -21,6 +21,7 @@ public class VenueRequestDTO {
     private String city;
     private String district;
     private String contact;
+    private String siteLink; // Website or social media link
     private Set<musicGenre> musicGenres;
     private List<FacilityRequestDTO> facilities;
 }

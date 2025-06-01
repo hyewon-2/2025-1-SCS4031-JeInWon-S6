@@ -1,12 +1,15 @@
 package JeInOne.WeGong.Service;
 
+import JeInOne.WeGong.DTO.PerformanceCreateFromRequest;
 import JeInOne.WeGong.DTO.PerformanceRequestDTO;
 import JeInOne.WeGong.DTO.PerformanceResponseDTO;
 import JeInOne.WeGong.Entity.Musician;
 import JeInOne.WeGong.Entity.Performance;
+import JeInOne.WeGong.Entity.RentalRequest;
 import JeInOne.WeGong.Entity.Venue;
 import JeInOne.WeGong.Repository.MusicianRepository;
 import JeInOne.WeGong.Repository.PerformanceRepository;
+import JeInOne.WeGong.Repository.RentalRequestRepository;
 import JeInOne.WeGong.Repository.VenueRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ public class PerformanceServiceImpl implements PerformanceService {
     private final PerformanceRepository performanceRepository;
     private final VenueRepository venueRepository;
     private final MusicianRepository musicianRepository;
+    private final RentalRequestRepository rentalRequestRepository;
 
     @Override
     public Long createPerformance(PerformanceRequestDTO dto) {
@@ -122,9 +126,35 @@ public class PerformanceServiceImpl implements PerformanceService {
                 .ticketPriceOnline(performance.getTicketPriceOnline())
                 .ticketPriceOnsite(performance.getTicketPriceOnsite())
                 .venueName(performance.getVenue().getName())
+                .venueSiteLink(performance.getVenue().getSiteLink())
                 .musicianNames(performance.getMusicians().stream()
                         .map(Musician::getMusicianName)
                         .collect(Collectors.toList()))
                 .build();
+    }
+
+
+    @Override
+    public Long createPerformanceFromRentalRequest(PerformanceCreateFromRequest dto) {
+        RentalRequest request = rentalRequestRepository.findById(dto.getRentalRequestId())
+                .orElseThrow(() -> new EntityNotFoundException("Rental request not found"));
+
+        if (!request.isApproved()) {
+            throw new IllegalStateException("Rental request must be approved before creating a performance");
+        }
+
+        Performance performance = new Performance(
+                dto.getName(),
+                dto.getStartDate(),
+                dto.getEndDate(),
+                dto.getStartTime(),
+                dto.getEndTime(),
+                dto.getTicketPriceOnline(),
+                dto.getTicketPriceOnsite(),
+                request.getVenue(),
+                List.of(request.getMusician())
+        );
+
+        return performanceRepository.save(performance).getId();
     }
 }

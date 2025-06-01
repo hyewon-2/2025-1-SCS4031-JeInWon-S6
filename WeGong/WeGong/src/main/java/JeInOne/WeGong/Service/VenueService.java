@@ -3,9 +3,12 @@ package JeInOne.WeGong.Service;
 import JeInOne.WeGong.DTO.FacilityResponseDTO;
 import JeInOne.WeGong.DTO.VenueRequestDTO;
 import JeInOne.WeGong.DTO.VenueResponseDTO;
+import JeInOne.WeGong.Entity.BusinessOwner;
 import JeInOne.WeGong.Entity.Facility;
 import JeInOne.WeGong.Entity.Venue;
+import JeInOne.WeGong.Repository.BusinessOwnerRepository;
 import JeInOne.WeGong.Repository.VenueRepository;
+import JeInOne.WeGong.exception.UnauthorizedException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 public class VenueService {
 
     private final VenueRepository venueRepository;
+    private final BusinessOwnerRepository businessOwnerRepository;
 
     public Long createVenue(VenueRequestDTO dto) {
         Venue venue = Venue.builder()
@@ -32,6 +36,7 @@ public class VenueService {
                 .city(dto.getCity())
                 .district(dto.getDistrict())
                 .contact(dto.getContact())
+                .siteLink(dto.getSiteLink())
                 .musicGenres(dto.getMusicGenres())
                 .build();
 
@@ -48,6 +53,28 @@ public class VenueService {
 
         venueRepository.save(venue);
         return venue.getId();
+    }
+
+    public VenueResponseDTO createVenueWithBusinessOwner(VenueRequestDTO request, Long ownerId) {
+        BusinessOwner owner = businessOwnerRepository.findById(ownerId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 사업자를 찾을 수 없습니다."));
+
+        Venue venue = Venue.builder()
+                .name(request.getName())
+                .rental(request.isRental())
+                .eventhosting(request.isEventhosting())
+                .isIndoor(request.isIndoor())
+                .capacity(request.getCapacity())
+                .city(request.getCity())
+                .district(request.getDistrict())
+                .contact(request.getContact())
+                .siteLink(request.getSiteLink())
+                .musicGenres(request.getMusicGenres())
+                .businessOwner(owner)
+                .build();
+
+        venueRepository.save(venue);
+        return VenueResponseDTO.fromEntity(venue);
     }
 
     @Transactional(readOnly = true)
@@ -80,6 +107,18 @@ public class VenueService {
                 .collect(Collectors.toList());
     }
 
+    public VenueResponseDTO updateVenue(Long venueId, VenueRequestDTO request, Long ownerId) {
+        Venue venue = venueRepository.findById(venueId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 공연장을 찾을 수 없습니다."));
+
+        if (!venue.getBusinessOwner().getId().equals(ownerId)) {
+            throw new UnauthorizedException("해당 공연장을 수정할 권한이 없습니다.");
+        }
+
+        venue.update(request);
+        return VenueResponseDTO.fromEntity(venue);
+    }
+
     private VenueResponseDTO convertToResponse(Venue venue) {
         List<FacilityResponseDTO> facilityDTOs = venue.getFacilities().stream()
                 .map(facility -> FacilityResponseDTO.builder()
@@ -102,6 +141,7 @@ public class VenueService {
                 .city(venue.getCity())
                 .district(venue.getDistrict())
                 .contact(venue.getContact())
+                .siteLink(venue.getSiteLink())
                 .musicGenres(venue.getMusicGenres())
                 .facilities(facilityDTOs)
                 .build();
