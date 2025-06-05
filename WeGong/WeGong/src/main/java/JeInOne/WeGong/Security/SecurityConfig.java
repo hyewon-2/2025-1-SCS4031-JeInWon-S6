@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig {
@@ -17,7 +16,25 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/api/musician/signup"), new AntPathRequestMatcher("/api/listener/signup"), new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(
+                                "/api/musician/signup",
+                                "/api/musician/login",
+                                "/api/musician/mypage",
+                                "/api/musician/mypage/**",
+                                "/api/listener/signup",
+                                "/api/listener/login",
+                                "/api/business-owner",
+                                "/api/business-owner/venues",
+                                "/api/business-owner/**",
+                                "/api/venues",
+                                "/api/venues/**",
+                                "/api/venues/sort",
+                                "/api/performance",
+                                "/api/performance/**",
+                                "/api/events",
+                                "/api/events/**",
+                                "/h2-console/**"
+                        ).permitAll()
 
                         .anyRequest().authenticated()
                 )
@@ -30,7 +47,7 @@ public class SecurityConfig {
                         .cacheControl(Customizer.withDefaults())
                         .frameOptions(frame -> frame.sameOrigin())
                 )
-//                .formLogin();
+                .formLogin(form -> form.disable())
                 .httpBasic(Customizer.withDefaults());
 
 

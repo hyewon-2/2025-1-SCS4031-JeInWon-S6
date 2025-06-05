@@ -13,10 +13,10 @@ const eventImages = [
 ];
 
 const eventList = [
-  { id: 1, name: '강남 페스티벌', city: '서울', district: '강남구', category: '축제' },
-  { id: 2, name: '강남 신한뮤직쇼', city: '서울', district: '강남구', category: '축제' },
-  { id: 3, name: '강남 나이트페스티벌', city: '서울', district: '강남구', category: '축제' },
-  { id: 4, name: '강남 거리문화축제', city: '서울', district: '강남구', category: '축제' },
+  { id: 1, name: '강남 페스티벌', city: '서울', district: '강남구', category: '축제', date: '2025.05.24 ~ 2025.05.25' },
+  { id: 2, name: '강남 신한뮤직쇼', city: '서울', district: '강남구', category: '축제', date: '2025.05.26 ~ 2025.05.27' },
+  { id: 3, name: '강남 나이트페스티벌', city: '서울', district: '강남구', category: '축제', date: '2025.06.01 ~ 2025.06.02' },
+  { id: 4, name: '강남 거리문화축제', city: '서울', district: '강남구', category: '축제', date: '2025.06.05 ~ 2025.06.06' },
   { id: 5, name: '서울재즈페스티벌', city: '서울', district: '송파구', category: '축제', date: '2025.05.28 ~ 2025.05.30' },
   { id: 6, name: '광안리불꽃쇼', city: '부산', district: '수영구', category: '축제', date: '2025.06.20 ~ 2025.06.21' },
   { id: 7, name: '인천뮤직위크', city: '인천', district: '연수구', category: '축제', date: '2025.07.03 ~ 2025.07.05' },
@@ -34,7 +34,6 @@ const eventList = [
   { id: 19, name: '부산인디록데이', city: '부산', district: '해운대구', category: '축제', date: '2025.11.20 ~ 2025.11.22' },
   { id: 20, name: '노원청년페스타', city: '서울', district: '노원구', category: '축제', date: '2025.12.01 ~ 2025.12.02' },
 ];
-
 
 const PerformerEventList = () => {
   const [params] = useSearchParams();

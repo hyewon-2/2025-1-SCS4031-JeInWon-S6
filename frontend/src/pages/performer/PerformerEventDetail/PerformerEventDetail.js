@@ -92,11 +92,7 @@ const PerformerEventDetail = () => {
         <span>뒤로가기</span>
       </button>
       <div className="event-detail-card">
-        <img
-          src={event.image}
-          alt={event.name}
-          className="event-detail-image"
-        />
+        <img src={event.image} alt={event.name} className="event-detail-image" />
         <h2 className="event-detail-title">{event.name}</h2>
         <p className="event-detail-sub">📍 {event.city} {event.district}</p>
         <p className="event-detail-sub">🎉 {event.category}</p>

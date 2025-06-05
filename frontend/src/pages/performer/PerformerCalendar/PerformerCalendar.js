@@ -152,7 +152,6 @@ const PerformerCalendar = () => {
             .filter(r => r.id !== id);
           localStorage.setItem('eventReservations', JSON.stringify(updated));
         }
-
         // 상태 재갱신
         setRefreshFlag(prev => !prev);
 
@@ -177,7 +176,9 @@ const PerformerCalendar = () => {
 
       <div className="calendar-days-row">
         {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => (
-          <div key={i} className="calendar-day-label">{d}</div>
+          <div key={i} className="calendar-day-label">
+            {d}
+          </div>
         ))}
       </div>
 
