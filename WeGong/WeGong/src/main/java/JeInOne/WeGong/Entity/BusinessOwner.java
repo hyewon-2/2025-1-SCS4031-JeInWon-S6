@@ -1,6 +1,7 @@
 package JeInOne.WeGong.Entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,10 +30,12 @@ public class BusinessOwner {
     @OneToMany(mappedBy = "businessOwner", cascade = CascadeType.ALL)
     private List<Venue> venues = new ArrayList<>();
 
-    public BusinessOwner(String name, String password, String contact, String account) {
+    @Builder
+    public BusinessOwner(String name, String password, String contact, String link, String account) {
         this.name = name;
         this.password = password;
         this.contact = contact;
+        this.link = link;
         this.account = account;
     }
 }

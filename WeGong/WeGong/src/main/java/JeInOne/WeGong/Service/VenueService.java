@@ -26,7 +26,7 @@ public class VenueService {
     private final VenueRepository venueRepository;
     private final BusinessOwnerRepository businessOwnerRepository;
 
-    public Long createVenue(VenueRequestDTO dto) {
+    public VenueResponseDTO createVenue(VenueRequestDTO dto, BusinessOwner owner) {
         Venue venue = Venue.builder()
                 .name(dto.getName())
                 .rental(dto.isRental())
@@ -35,9 +35,11 @@ public class VenueService {
                 .capacity(dto.getCapacity())
                 .city(dto.getCity())
                 .district(dto.getDistrict())
+                .address(dto.getAddress())
                 .contact(dto.getContact())
                 .siteLink(dto.getSiteLink())
                 .musicGenres(dto.getMusicGenres())
+                .businessOwner(owner)
                 .build();
 
         List<Facility> facilities = dto.getFacilities().stream()
@@ -52,12 +54,14 @@ public class VenueService {
         venue.setFacilities(facilities);
 
         venueRepository.save(venue);
-        return venue.getId();
+        return convertToResponse(venue);
     }
 
     public VenueResponseDTO createVenueWithBusinessOwner(VenueRequestDTO request, Long ownerId) {
         BusinessOwner owner = businessOwnerRepository.findById(ownerId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 사업자를 찾을 수 없습니다."));
+
+        validateVenueRequest(request);
 
         Venue venue = Venue.builder()
                 .name(request.getName())
@@ -67,6 +71,7 @@ public class VenueService {
                 .capacity(request.getCapacity())
                 .city(request.getCity())
                 .district(request.getDistrict())
+                .address(request.getAddress())
                 .contact(request.getContact())
                 .siteLink(request.getSiteLink())
                 .musicGenres(request.getMusicGenres())
@@ -75,6 +80,15 @@ public class VenueService {
 
         venueRepository.save(venue);
         return VenueResponseDTO.fromEntity(venue);
+    }
+
+    private void validateVenueRequest(VenueRequestDTO request) {
+        if (request.getName() == null || request.getName().isEmpty()) {
+            throw new IllegalArgumentException("공연장 이름은 필수입니다.");
+        }
+        if (request.getCapacity() < 0) {
+            throw new IllegalArgumentException("수용 인원 기입이 부적절합니다.");
+        }
     }
 
     @Transactional(readOnly = true)

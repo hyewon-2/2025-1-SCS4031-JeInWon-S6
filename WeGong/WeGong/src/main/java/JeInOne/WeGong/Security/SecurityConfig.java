@@ -24,6 +24,7 @@ public class SecurityConfig {
                                 "/api/listener/signup",
                                 "/api/listener/login",
                                 "/api/business-owner",
+                                "/api/business-owner/venues",
                                 "/api/business-owner/**",
                                 "/api/venues",
                                 "/api/venues/**",

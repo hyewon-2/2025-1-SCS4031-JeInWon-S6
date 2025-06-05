@@ -32,6 +32,7 @@ public class Venue {
 
     private String city;
     private String district;
+    private String address;
 
     private String contact;
 
@@ -59,6 +60,7 @@ public class Venue {
         this.capacity = request.getCapacity();
         this.city = request.getCity();
         this.district = request.getDistrict();
+        this.address = request.getAddress();
         this.contact = request.getContact();
         this.siteLink = request.getSiteLink();
         this.musicGenres = request.getMusicGenres() != null ? request.getMusicGenres() : new HashSet<>();

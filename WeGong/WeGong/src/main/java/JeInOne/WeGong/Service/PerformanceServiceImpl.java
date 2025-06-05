@@ -32,7 +32,7 @@ public class PerformanceServiceImpl implements PerformanceService {
     @Override
     public Long createPerformance(PerformanceRequestDTO dto) {
         Venue venue = venueRepository.findById(dto.getVenueId())
-                .orElseThrow(() -> new EntityNotFoundException("Venue not found"));
+                .orElseThrow(() -> new EntityNotFoundException("공연장이 존재하지 않습니다."));
 
         List<Musician> musicians = musicianRepository.findAllById(dto.getMusicianIds());
 
@@ -55,7 +55,7 @@ public class PerformanceServiceImpl implements PerformanceService {
     @Transactional(readOnly = true)
     public PerformanceResponseDTO getPerformance(Long id) {
         Performance performance = performanceRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Performance not found"));
+                .orElseThrow(() -> new EntityNotFoundException("공연이 존재하지 않습니다."));
 
         return mapToDto(performance);
     }
@@ -71,10 +71,10 @@ public class PerformanceServiceImpl implements PerformanceService {
     @Override
     public void updatePerformance(Long id, PerformanceRequestDTO dto) {
         Performance performance = performanceRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Performance not found"));
+                .orElseThrow(() -> new EntityNotFoundException("공연이 존재하지 않습니다."));
 
         Venue venue = venueRepository.findById(dto.getVenueId())
-                .orElseThrow(() -> new EntityNotFoundException("Venue not found"));
+                .orElseThrow(() -> new EntityNotFoundException("공연장이 존재하지 않습니다."));
 
         List<Musician> musicians = musicianRepository.findAllById(dto.getMusicianIds());
 
@@ -108,7 +108,7 @@ public class PerformanceServiceImpl implements PerformanceService {
     @Override
     public void deletePerformance(Long id) {
         Performance performance = performanceRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Performance not found"));
+                .orElseThrow(() -> new EntityNotFoundException("공연이 존재하지 않습니다."));
 
         //향후 삭제 불가 조건 작성 (예: 공연이 이미 시작했거나, 임박했거나, 지난 경우 등)
 
@@ -137,10 +137,10 @@ public class PerformanceServiceImpl implements PerformanceService {
     @Override
     public Long createPerformanceFromRentalRequest(PerformanceCreateFromRequest dto) {
         RentalRequest request = rentalRequestRepository.findById(dto.getRentalRequestId())
-                .orElseThrow(() -> new EntityNotFoundException("Rental request not found"));
+                .orElseThrow(() -> new EntityNotFoundException("대관 신청이 존재하지 않습니다."));
 
         if (!request.isApproved()) {
-            throw new IllegalStateException("Rental request must be approved before creating a performance");
+            throw new IllegalStateException("공연 생성을 위해서는 대관 신청이 승인되어야 합니다.");
         }
 
         Performance performance = new Performance(

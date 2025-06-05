@@ -13,5 +13,6 @@ public class BusinessOwnerDTO {
     private String name;
     private String password;
     private String contact;
+    private String link;
     private String account;
 }

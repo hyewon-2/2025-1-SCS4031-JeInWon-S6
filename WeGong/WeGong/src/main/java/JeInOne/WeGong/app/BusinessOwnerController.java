@@ -1,15 +1,15 @@
 package JeInOne.WeGong.app;
 
-import JeInOne.WeGong.DTO.BusinessOwnerDTO;
-import JeInOne.WeGong.DTO.BusinessOwnerLoginRequest;
-import JeInOne.WeGong.DTO.VenueRequestDTO;
-import JeInOne.WeGong.DTO.VenueResponseDTO;
+import JeInOne.WeGong.DTO.*;
 import JeInOne.WeGong.Security.SecurityUtil;
 import JeInOne.WeGong.Service.BusinessOwnerService;
 import JeInOne.WeGong.Service.VenueService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,13 +22,17 @@ public class BusinessOwnerController {
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody BusinessOwnerDTO dto) {
         businessOwnerService.signup(dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody BusinessOwnerLoginRequest dto) {
-        String token = businessOwnerService.login(dto);
-        return ResponseEntity.ok(token);
+    public ResponseEntity<BusinessOwnerLoginResponse> login(@RequestBody BusinessOwnerLoginRequest dto) {
+        try {
+            BusinessOwnerLoginResponse response = businessOwnerService.login(dto);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @PostMapping("/venues")

@@ -26,7 +26,7 @@ public class RentalRequestService {
     private final RentalRequestRepository rentalRequestRepository;
     private final VenueRepository venueRepository;
     private final MusicianRepository musicianRepository;
-    private final SecurityUtil securityUtil;
+    //private final SecurityUtil securityUtil;
 
     @Transactional
     public Long createRentalRequest(RentalRequestCreateDTO dto) {
@@ -52,6 +52,7 @@ public class RentalRequestService {
         return rentalRequestRepository.save(request).getId();
     }
 
+    @Transactional(readOnly = true)
     public List<RentalRequestResponseDTO> getRequestsForBusinessOwner(Long businessOwnerId) {
         List<RentalRequest> requests = rentalRequestRepository.findByVenue_BusinessOwner_Id(businessOwnerId);
         return requests.stream()
