@@ -1,29 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './PerformerHallDetail.css';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { FaArrowLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Swal from 'sweetalert2';
-
-const defaultVenueList = [
-  {
-    id: '1',
-    name: '제비다방',
-    image: '/images/performancehall/hall_000.png',
-    region: '마포구',
-    size: 4,
-    equipment: '기본 음향/조명',
-    contact: '010-1234-5678',
-  },
-  {
-    id: '2',
-    name: '뮤지스땅스',
-    image: '/images/performancehall/hall_001.png',
-    region: '서대문구',
-    size: 50,
-    equipment: '기본 음향/조명',
-    contact: '010-5678-1234',
-  },
-];
+import fetchVenues from '../../api/venues';
 
 const PerformerHallDetail = () => {
   const today = new Date();
@@ -32,15 +12,26 @@ const PerformerHallDetail = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [venue, setVenue] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
   const readonly = location.state?.readonly ?? false;
   const from = location.state?.from || (readonly ? '/business/home' : '/performer/home');
 
-  const savedVenueList = JSON.parse(localStorage.getItem('venueList') || JSON.stringify(defaultVenueList));
-  const venueFromList = savedVenueList.find(v => String(v.id) === id);
-  const [venue, setVenue] = useState(venueFromList || {});
+  useEffect(() => {
+    const loadVenue = async () => {
+      const venueList = await fetchVenues();
+      const found = venueList.find(v => String(v.id) === id);
+      if (found) {
+        setVenue(found);
+      }
+      setLoading(false);
+    };
+    loadVenue();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,10 +50,9 @@ const PerformerHallDetail = () => {
   };
 
   const handleSave = () => {
-    const updatedList = savedVenueList.map(v => v.id === venue.id ? venue : v);
-    localStorage.setItem('venueList', JSON.stringify(updatedList));
-    setIsEditing(false);
     Swal.fire({ icon: 'success', title: '수정 완료', text: '공연장 정보가 수정되었습니다!' });
+    setIsEditing(false);
+    // TODO: 추후 백엔드 연동 시 PATCH 요청 추가
   };
 
   const handlePrevMonth = () => {
@@ -91,9 +81,7 @@ const PerformerHallDetail = () => {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const days = [];
-
     for (let i = 0; i < firstDay; i++) days.push(null);
-
     for (let i = 1; i <= daysInMonth; i++) {
       const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
       days.push({ day: i, dateStr });
@@ -107,8 +95,6 @@ const PerformerHallDetail = () => {
     '2025-06-02': ['09:00', '13:00', '17:00'],
     '2025-06-10': ['10:00', '12:00', '16:00'],
   };
-
-  const days = getDaysInMonth(currentYear, currentMonth);
 
   const handleReserve = () => {
     if (!selectedDate || !selectedTime) return;
@@ -180,6 +166,11 @@ const PerformerHallDetail = () => {
     });
   };
 
+  const days = getDaysInMonth(currentYear, currentMonth);
+
+  if (loading) return <div>로딩 중...</div>;
+  if (!venue) return <div>공연장 정보를 찾을 수 없습니다.</div>;
+
   return (
     <div className="venue-detail-container">
       <button className="back-button" onClick={() => navigate(from)}>
@@ -206,7 +197,6 @@ const PerformerHallDetail = () => {
         )}
       </div>
 
-
       <div className="venue-info-box responsive-box">
         {isEditing ? (
           <>
@@ -224,7 +214,7 @@ const PerformerHallDetail = () => {
             <p>규모: {venue.size}명</p>
             <p>장비: {venue.equipment}</p>
             <p>연락처: {venue.contact}</p>
-            {!isEditing && venue.id && (() => {
+            {(() => {
               const links = JSON.parse(localStorage.getItem('businessVenueLinks') || '{}');
               const venueLink = links[venue.id];
               return venueLink ? (
@@ -236,7 +226,6 @@ const PerformerHallDetail = () => {
                     className="venue-reserve-link"
                   >
                     공식 홈페이지 바로가기
-
                   </a>
                 </p>
               ) : null;
