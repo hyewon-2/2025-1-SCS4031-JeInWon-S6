@@ -18,11 +18,11 @@ public class VenueController {
 
     private final VenueService venueService;
 
-    @PostMapping
-    public ResponseEntity<Long> createVenue(@RequestBody @Validated VenueRequestDTO dto) {
-        Long venueId = venueService.createVenue(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(venueId);
-    }
+//    @PostMapping
+//    public ResponseEntity<Long> createVenue(@RequestBody @Validated VenueRequestDTO dto) {
+//        Long venueId = venueService.createVenue(dto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(venueId);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<VenueResponseDTO> getVenue(@PathVariable Long id) {

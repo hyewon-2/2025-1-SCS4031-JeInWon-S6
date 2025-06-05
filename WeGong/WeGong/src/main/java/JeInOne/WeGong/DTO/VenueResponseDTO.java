@@ -22,7 +22,9 @@ public class VenueResponseDTO {
     private Integer capacity;
     private String city;
     private String district;
+    private String address;
     private String contact;
+    private String siteLink; // Website or social media link
     private Set<musicGenre> musicGenres;
     private List<FacilityResponseDTO> facilities;
 
@@ -36,11 +38,13 @@ public class VenueResponseDTO {
                 .capacity(venue.getCapacity())
                 .city(venue.getCity())
                 .district(venue.getDistrict())
+                .address(venue.getAddress())
                 .contact(venue.getContact())
+                .siteLink(venue.getSiteLink())
                 .musicGenres(venue.getMusicGenres())
-//                .facilities(venue.getFacilities().stream()
-//                        .map(FacilityResponseDTO::fromEntity)
-//                        .toList())
+                .facilities(venue.getFacilities().stream()
+                        .map(FacilityResponseDTO::fromEntity)
+                        .toList())
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package JeInOne.WeGong.Entity;
 
+import JeInOne.WeGong.DTO.VenueRequestDTO;
 import JeInOne.WeGong.Enums.musicGenre;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,8 +32,11 @@ public class Venue {
 
     private String city;
     private String district;
+    private String address;
 
     private String contact;
+
+    private String siteLink; // Website or social media link
 
     @ElementCollection(targetClass = musicGenre.class)
     @Enumerated(EnumType.STRING)
@@ -43,4 +47,32 @@ public class Venue {
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Facility> facilities = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "business_owner_id", nullable = false)
+    private BusinessOwner businessOwner;
+
+    public void update(VenueRequestDTO request) {
+        this.name = request.getName();
+        this.rental = request.isRental();
+        this.eventhosting = request.isEventhosting();
+        this.isIndoor = request.isIndoor();
+        this.capacity = request.getCapacity();
+        this.city = request.getCity();
+        this.district = request.getDistrict();
+        this.address = request.getAddress();
+        this.contact = request.getContact();
+        this.siteLink = request.getSiteLink();
+        this.musicGenres = request.getMusicGenres() != null ? request.getMusicGenres() : new HashSet<>();
+
+        // Update facilities if provided
+//        if (request.getFacilities() != null) {
+//            this.facilities.clear();
+//            for (FacilityRequestDTO facilityRequest : request.getFacilities()) {
+//                Facility facility = new Facility(facilityRequest);
+//                facility.setVenue(this);
+//                this.facilities.add(facility);
+//            }
+//        }
+    }
 }

@@ -1,5 +1,6 @@
 package JeInOne.WeGong.app;
 
+import JeInOne.WeGong.DTO.PerformanceCreateFromRequest;
 import JeInOne.WeGong.DTO.PerformanceRequestDTO;
 import JeInOne.WeGong.DTO.PerformanceResponseDTO;
 import JeInOne.WeGong.Service.PerformanceService;
@@ -42,5 +43,12 @@ public class PerformanceController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         performanceService.deletePerformance(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @PostMapping("/from-request")
+    public ResponseEntity<Long> createFromRentalRequest(@RequestBody PerformanceCreateFromRequest dto) {
+        Long id = performanceService.createPerformanceFromRentalRequest(dto);
+        return ResponseEntity.ok(id);
     }
 }

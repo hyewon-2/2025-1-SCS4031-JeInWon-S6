@@ -3,11 +3,9 @@ package JeInOne.WeGong.Security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.JwtParserBuilder;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-//import lombok.Value;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +33,7 @@ public class JwtTokenProvider {
     }
 
     public String createToken(String userId, String role) {
-        Claims claims = (Claims) Jwts.claims().setSubject(userId);
+        Claims claims = Jwts.claims().setSubject(userId);
         claims.put("role", role);
 
         Date now = new Date();
