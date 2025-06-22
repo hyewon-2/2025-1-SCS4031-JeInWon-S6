@@ -90,8 +90,16 @@ const BusinessHome = () => {
       companyName: name,
       venueName: venues[0]?.name || '',
     };
+
     localStorage.setItem('user', JSON.stringify(updatedUser));
+
+    const allBusinessUsers = JSON.parse(localStorage.getItem('businessUsers') || '[]');
+    const updatedBusinessUsers = allBusinessUsers.map(user =>
+      user.id === currentUser.id ? updatedUser : user
+    );
+    localStorage.setItem('businessUsers', JSON.stringify(updatedBusinessUsers));
   };
+
 
   const handleAddVenue = () => {
     const trimmed = newVenue.trim();
@@ -113,17 +121,23 @@ const BusinessHome = () => {
         r.date === reservation.date &&
         r.time === reservation.time
       ) {
-        return { ...r, status: '예약확정' };
+        return {
+          ...r,
+          status: '예약확정',
+          performerId: r.performerId || reservation.performerId, // 혹시 null이면 보완
+          venueId: r.venueId || reservation.venueId,
+          date: r.date || reservation.date,
+          time: r.time || reservation.time,
+          venueName: r.venueName || reservation.venueName,
+        };
       }
       return r;
     });
 
     localStorage.setItem('reservations', JSON.stringify(updated));
     setReservations(updated.filter(r => venues.some(v => String(v.id) === String(r.venueId))));
-
     localStorage.setItem('reservationConfirmed', 'true');
 
-    // ✅ 알림 추가
     Swal.fire({
       icon: 'success',
       title: '예약이 확정되었습니다!',
@@ -214,7 +228,7 @@ const BusinessHome = () => {
             </>
           ) : (
             <>
-              <div className="profile-name">{name}님</div>
+              <div className="profile-name">{name || '사업자'}님</div>
               <div className="profile-venue-label">내 사업장</div>
               <div className="profile-venues">
                 {venues.map((venue) => (

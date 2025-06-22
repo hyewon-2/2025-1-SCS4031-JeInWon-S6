@@ -137,6 +137,7 @@
 .calendar-day.available:not(.selected) {
   color: #FFE27A;
   font-weight: bold;
+  border-radius: 50%;
 }
 .calendar-day.unavailable {
   color: #444;
@@ -195,3 +196,44 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+.calendar-day.full {
+  background-color: #1f1f1f;
+  color: #666;
+  pointer-events: none;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.calendar-day.full .day-number {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.day-number {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 2px;
+}
+.badge-closed {
+  font-size: 10px;
+  padding: 1px 4px;
+  background-color: #444;
+  color: #bbb;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+.time-button.disabled {
+  background-color: #2a2a2a;
+  color: #666;
+  border: 1px solid #3a3a3a;
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+  border-radius: 6px;
+}
+
+

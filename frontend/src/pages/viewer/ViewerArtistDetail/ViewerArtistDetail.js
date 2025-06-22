@@ -11,13 +11,6 @@ const mockConcerts = [
     date: '2025.04.01',
     price: '25,000원',
   },
-  {
-    id: '2',
-    image: '/images/concerts/concert_001.png',
-    location: '합정 클럽',
-    date: '2025.04.10',
-    price: '30,000원',
-  },
 ];
 
 const ViewerArtistDetail = () => {
@@ -85,7 +78,7 @@ const ViewerArtistDetail = () => {
       </div>
 
       <h2 className="artistdetail-name">{artist.name}</h2>
-      <p className="artistdetail-section-title">{artist.name}의 공연</p>
+      <p className="artistdetail-section-title">{artist.name}님의 공연</p>
 
       <div className="artistdetail-card-container">
         {mockConcerts.map(renderConcertCard)}

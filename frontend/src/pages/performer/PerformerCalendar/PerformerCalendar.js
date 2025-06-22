@@ -55,6 +55,11 @@ const PerformerCalendar = () => {
     );
 
     setPerformerReservations([...myVenueReservations, ...expandedEvents]);
+
+    console.log('내 공연자 ID:', performerId);
+    console.log('모든 예약:', allReservations);
+    console.log('필터링된 내 예약:', myVenueReservations);
+
   };
 
   useEffect(() => {
@@ -62,25 +67,24 @@ const PerformerCalendar = () => {
   }, [refreshFlag]); // 상태 변화시 재로드
 
   useEffect(() => {
-    if (localStorage.getItem('reservationConfirmed') === 'true') {
+    const confirmed = localStorage.getItem('reservationConfirmed') === 'true';
+    const requested = localStorage.getItem('reservationRequested') === 'true';
+
+    if (confirmed) {
       Swal.fire({
         icon: 'success',
         title: '예약이 확정되었습니다!',
         text: '공연장 측에서 예약을 수락했습니다.',
         confirmButtonColor: '#495BFB'
       });
-
       localStorage.removeItem('reservationConfirmed');
-
-      // ✅ 추가: 상태 강제 재로딩
-      setRefreshFlag(prev => !prev);
     }
-  }, []);
 
-
-  useEffect(() => {
-    if (localStorage.getItem('reservationRequested') === 'true') {
+    if (requested) {
       localStorage.removeItem('reservationRequested');
+    }
+
+    if (confirmed || requested) {
       setRefreshFlag(prev => !prev);
     }
   }, []);
@@ -116,12 +120,9 @@ const PerformerCalendar = () => {
     for (let i = 1; i <= daysInMonth; i++) {
       const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
       const reservations = performerReservations.filter(ev => ev.date === dateString);
-      const status = reservations.find(r => r.status === '예약확정')
-        ? '예약확정'
-        : reservations.find(r => r.status === '대기중')
-        ? '대기중'
-        : null;
-      days.push({ day: i, dateString, reservationStatus: status });
+      const hasConfirmed = reservations.some(r => r.status === '예약확정');
+      const hasPending = reservations.some(r => r.status === '대기중');
+      days.push({ day: i, dateString, hasConfirmed, hasPending });
     }
 
     return days;
@@ -191,15 +192,8 @@ const PerformerCalendar = () => {
             {day.dateString ? (
               <div className="calendar-day-content">
                 <div>{day.day}</div>
-                {day.reservationStatus && (
-                  <div
-                    className={
-                      day.reservationStatus === '대기중'
-                        ? 'pending-dot'
-                        : 'confirmed-dot'
-                    }
-                  />
-                )}
+                {day.hasPending && <span className="pending-dot"></span>}
+                {day.hasConfirmed && <span className="confirmed-dot"></span>}
               </div>
             ) : (
               <div className="empty-day"></div>

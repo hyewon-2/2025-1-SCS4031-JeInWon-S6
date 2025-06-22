@@ -29,7 +29,6 @@ const PerformerMypage = () => {
       <header className="performer-header">
         <div className="performer-profile-circle" />
         <span className="performer-header-title">계정 정보</span>
-        <button className="performer-edit-btn">수정</button>
       </header>
       <section className="performer-resume-section">
             <div className="performer-resume-box">

@@ -3,9 +3,9 @@
 export const artistList = [
   {
     id: '1',
-    name: '모스크바서핑클럽',
+    name: '주나주나',
     image: '/images/artists/artist_000.png',
-    intro: '몽환적인 사운드와 서핑 감성을 담은 인디 밴드입니다.',
+    intro: '몽환적인 사운드와 서핑 감성을 담은 인디 뮤지션입니다.',
     region: '서울',
     size: 5,
   },

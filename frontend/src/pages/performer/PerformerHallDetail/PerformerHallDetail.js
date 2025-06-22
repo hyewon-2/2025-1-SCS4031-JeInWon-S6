@@ -106,6 +106,34 @@ const PerformerHallDetail = () => {
     '2025-05-28': ['11:00', '15:00'],
     '2025-06-02': ['09:00', '13:00', '17:00'],
     '2025-06-10': ['10:00', '12:00', '16:00'],
+
+    '2025-07-05': ['14:00', '19:00'],
+    '2025-07-07': ['18:00', '20:00'],
+    '2025-07-12': ['13:00', '16:00', '20:00'],
+    '2025-07-14': ['18:00', '21:00'],
+    '2025-07-21': ['18:30', '20:30'],
+    '2025-07-27': ['12:00', '15:00', '19:00'],
+
+    '2025-08-02': ['13:00', '16:00', '19:00'],
+    '2025-08-04': ['18:00', '20:00'],
+    '2025-08-09': ['14:00', '17:00', '20:00'],
+    '2025-08-15': ['19:00', '21:00'],
+    '2025-08-18': ['18:00', '20:00'],
+    '2025-08-25': ['18:00', '20:00'],
+
+    '2025-09-01': ['18:00', '20:00'],
+    '2025-09-06': ['13:00', '16:00', '19:00'],
+    '2025-09-13': ['14:00', '19:00'],
+    '2025-09-20': ['12:00', '15:00', '18:00'],
+    '2025-09-22': ['18:00', '21:00'],
+    '2025-09-28': ['14:00', '17:00'],
+
+    '2025-10-03': ['14:00', '18:00', '21:00'],
+    '2025-10-05': ['12:00', '15:00', '19:00'],
+    '2025-10-12': ['13:00', '16:00', '20:00'],
+    '2025-10-18': ['14:00', '19:00'],
+    '2025-10-21': ['18:00', '20:00'],
+    '2025-10-25': ['13:00', '16:00', '19:00'],
   };
 
   const days = getDaysInMonth(currentYear, currentMonth);
@@ -113,24 +141,38 @@ const PerformerHallDetail = () => {
   const handleReserve = () => {
     if (!selectedDate || !selectedTime) return;
 
+    const selected = new Date(selectedDate);
+    selected.setHours(0, 0, 0, 0);
+    const todayCheck = new Date();
+    todayCheck.setHours(0, 0, 0, 0);
+
+    if (selected < todayCheck) {
+      Swal.fire({
+        icon: 'warning',
+        title: '지원 불가',
+        text: '이미 지난 날짜에는 예약할 수 없습니다.',
+        confirmButtonColor: '#f85151',
+      });
+      return;
+    }
+
     const allReservations = JSON.parse(localStorage.getItem('reservations') || '[]');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const performerId = user?.id || 'guest';
 
-    const alreadyExists = allReservations.some(
+    const alreadyConfirmed = allReservations.some(
       r =>
-        r.performerId === performerId &&
-        r.venueName === venue.name &&
+        r.venueId === String(venue.id) &&
         r.date === selectedDate &&
         r.time === selectedTime &&
-        r.status !== '취소됨'
+        r.status === '예약확정'
     );
 
-    if (alreadyExists) {
+    if (alreadyConfirmed) {
       Swal.fire({
         icon: 'error',
         title: '이미 예약됨',
-        html: '해당 날짜에 이 공연장은<br/>이미 예약되어 있습니다.',
+        html: '해당 날짜와 시간은<br/>이미 예약이 확정되었습니다.',
         confirmButtonColor: '#f85151'
       });
       return;
@@ -178,6 +220,27 @@ const PerformerHallDetail = () => {
         });
       }
     });
+  };
+
+  const isFullyBooked = (dateStr) => {
+    const allReservations = JSON.parse(localStorage.getItem('reservations') || '[]');
+    const reservedTimes = allReservations
+      .filter(r => r.venueId === String(venue.id) && r.date === dateStr && r.status !== '취소됨')
+      .map(r => r.time);
+
+    const availableTimes = availableSlots[dateStr] || [];
+    return availableTimes.length > 0 && reservedTimes.length >= availableTimes.length;
+  };
+
+  const isTimeSlotReserved = (dateStr, timeStr) => {
+    const allReservations = JSON.parse(localStorage.getItem('reservations') || '[]');
+    return allReservations.some(
+      r =>
+        r.venueId === String(venue.id) &&
+        r.date === dateStr &&
+        r.time === timeStr &&
+        r.status === '예약확정'
+    );
   };
 
   return (
@@ -268,16 +331,22 @@ const PerformerHallDetail = () => {
                   item
                     ? `calendar-day
                         ${availableSlots[item.dateStr] ? 'available' : 'unavailable'}
+                        ${isFullyBooked(item.dateStr) ? 'full' : ''}
                         ${selectedDate === item.dateStr ? 'selected' : ''}`
                     : 'calendar-day empty'
                 }
                 onClick={() => {
-                  if (item && availableSlots[item.dateStr]) {
+                  if (
+                    item &&
+                    availableSlots[item.dateStr] &&
+                    !isFullyBooked(item.dateStr) // 예약 다 찬 날짜는 클릭 X
+                  ) {
                     setSelectedDate(item.dateStr);
                     setSelectedTime(null);
                   }
                 }}
               >
+
                 {item ? item.day : ''}
               </div>
             ))}
@@ -292,15 +361,21 @@ const PerformerHallDetail = () => {
               </div>
 
               <div className="time-grid">
-                {availableSlots[selectedDate].map(time => (
-                  <button
-                    key={time}
-                    className={`time-button ${selectedTime === time ? 'selected' : ''}`}
-                    onClick={() => setSelectedTime(time)}
-                  >
-                    {time}
-                  </button>
-                ))}
+                {availableSlots[selectedDate].map(time => {
+                  const isReserved = isTimeSlotReserved(selectedDate, time);
+                  return (
+                    <button
+                      key={time}
+                      className={`time-button ${selectedTime === time ? 'selected' : ''} ${isReserved ? 'disabled' : ''}`}
+                      onClick={() => {
+                        if (!isReserved) setSelectedTime(time);
+                      }}
+                      disabled={isReserved}
+                    >
+                      {time}
+                    </button>
+                  );
+                })}
               </div>
 
               <button

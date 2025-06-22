@@ -22,9 +22,14 @@ const PerformerResumeForm = () => {
   });
 
   useEffect(() => {
-    const saved = localStorage.getItem('performerResume');
-    if (saved) {
-      setFormData(JSON.parse(saved));
+    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+    const performerId = currentUser.id;
+
+    if (performerId) {
+      const allResumes = JSON.parse(localStorage.getItem('performerResumes') || '{}');
+      if (allResumes[performerId]) {
+        setFormData(allResumes[performerId]);
+      }
     }
   }, []);
 
@@ -68,13 +73,7 @@ const PerformerResumeForm = () => {
             className="resume-venue-input"
           />
         </div>
-        <input
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-          placeholder="이미지 URL"
-          className="resume-image-placeholder"
-        />
+
       </div>
 
       <div className="resume-details">
@@ -103,7 +102,7 @@ const PerformerResumeForm = () => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="공연에 대한 설명 또는 메모를 작성하세요"
+          placeholder="팀소개 및 이력서를 작성하세요."
           className="resume-description"
         />
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Login.css';
 
@@ -9,6 +9,14 @@ const Login = () => {
   const navigate = useNavigate();
 
   const type = location.state?.type || '';
+
+  // ❗ 사용자 유형 누락 시 뒤로 돌려보냄
+  useEffect(() => {
+    if (!type) {
+      alert('잘못된 접근입니다. 사용자 유형을 선택해주세요.');
+      navigate('/select-user');
+    }
+  }, [type]);
 
   const handleLogin = () => {
     if (!id || !password) {
@@ -31,22 +39,29 @@ const Login = () => {
       return;
     }
 
-    // 로그인 성공 → 유저 정보 저장
-    const userData = { id: found.id, type };
+    // ✅ 공연자/관람자/사업자에 따라 필요한 추가 필드 설정
+    const userData = {
+      ...found,
+      id: found.id,
+      type
+    };
 
-    if (type === 'business') {
-      userData.companyName = found.companyName;
-      userData.venueName = found.venueName;
+    // 🔒 사업자라면 venueId가 있는지 확인해서 추가
+    if (type === 'business' && !userData.venueId) {
+      userData.venueId = '1'; // 또는 해당 venueId 설정
     }
 
     localStorage.setItem('user', JSON.stringify(userData));
+    console.log('[로그인됨 사용자 정보]', userData);
 
-    if (type === 'performer') {
-      navigate('/performer/home');
-    } else if (type === 'viewer') {
-      navigate('/viewer/home');
-    } else if (type === 'business') {
-      navigate('/business/home');
+    const redirectMap = {
+      performer: '/performer/home',
+      viewer: '/viewer/home',
+      business: '/business/home'
+    };
+
+    if (redirectMap[type]) {
+      navigate(redirectMap[type]);
     } else {
       alert('잘못된 접근입니다.');
     }
